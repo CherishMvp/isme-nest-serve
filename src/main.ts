@@ -23,8 +23,8 @@ async function bootstrap() {
     }),
   );
 
-  await app.listen(process.env.APP_PORT || 8085);
+  await app.listen(process.env.APP_PORT || 4211);
 
-  console.log(`🚀 启动成功: http://localhost:${process.env.APP_PORT}`);
+  console.log(`🚀 启动成功: http://127.0.0.1:${process.env.APP_PORT}`);
 }
 bootstrap();
