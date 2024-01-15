@@ -17,6 +17,7 @@ export class ClassService {
     const res = await this.dormitoryRepo.find({ relations: ['members'] });
     for (const dormitory of res) {
       dormitory.photo_nums = dormitory['members'].length;
+      dormitory['swiper_list'] = dormitory['swiper_list'].split('\\n');
     }
     return res;
   }
@@ -30,6 +31,7 @@ export class ClassService {
       .getMany();
     for (const dormitory of res) {
       dormitory['photo_nums'] = dormitory['members'].length;
+      dormitory['swiper_list'] = dormitory['swiper_list'].split('\\n');
     }
     return res;
   }
