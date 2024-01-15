@@ -13,20 +13,21 @@ import { UserModule } from './modules/user/user.module';
 import { PermissionModule } from './modules/permission/permission.module';
 import { RoleModule } from './modules/role/role.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { ClassModule } from './modules/class/class.module';
 
 @Module({
   imports: [
     /* 配置文件模块 */
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: ['.env.local', '.env'],
+      envFilePath: ['.env.development', '.env'],
     }),
 
     UserModule,
     PermissionModule,
     RoleModule,
     AuthModule,
-
+    ClassModule,
     SharedModule,
   ],
 })

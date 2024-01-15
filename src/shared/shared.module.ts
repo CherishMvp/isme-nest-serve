@@ -33,6 +33,7 @@ import { createClient } from 'redis';
           database: process.env.DB_DATABASE || configService.get('DB_DATABASE'),
           synchronize: process.env.NODE_ENV === 'production' ? false : configService.get('DB_SYNC'),
           timezone: '+08:00',
+          poolSize: 20,
         };
       },
     }),

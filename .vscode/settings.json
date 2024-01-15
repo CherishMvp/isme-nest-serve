@@ -12,5 +12,6 @@
   },
   "files.associations": {
     "*.env.*": "dotenv"
-  }
+  },
+  "prettier.configPath": ".prettierrc"
 }

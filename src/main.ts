@@ -23,6 +23,7 @@ async function bootstrap() {
     }),
   );
 
+  // app.getHttpServer().setTimeout(5000); // 设置连接空闲超时时间为60秒
   await app.listen(process.env.APP_PORT || 4211);
 
   console.log(`🚀 启动成功: http://127.0.0.1:${process.env.APP_PORT}`);
