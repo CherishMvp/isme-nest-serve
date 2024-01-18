@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Put, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Delete, Query } from '@nestjs/common';
 import { ClassService } from './class.service';
 import { CreateDormitoryDto, CreateMemberDto } from './dto/create-class.dto';
 import { UpdateMemberDto, UpdateRoomDto } from './dto/update-class.dto';
+import { QueryClassDto } from './dto/query-class.dto';
 
 @Controller('class')
 export class ClassController {
@@ -17,7 +18,15 @@ export class ClassController {
   createMember(@Body() CreateMemberDto: CreateMemberDto) {
     return this.classService.createMember(CreateMemberDto);
   }
-
+  // 分页查询（传参）
+  @Get('/dorm/page')
+  findRoomInfoPagination(@Query() queryDto: QueryClassDto) {
+    return this.classService.findRoomInfoPagination(queryDto);
+  }
+  @Get('/member/page')
+  findMemberInfoPagination(@Query() queryDto: QueryClassDto) {
+    return this.classService.findMemberInfoPagination(queryDto);
+  }
   @Get('/findAllClassPhotos')
   findAll() {
     return this.classService.getAllClassPhotos();

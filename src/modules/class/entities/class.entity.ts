@@ -9,10 +9,10 @@ export class Dormitory {
   @Column({ comment: '寝室ID' })
   dormitoryId: number;
 
-  @Column({ comment: '相册的容量（可以保存的数量）' })
+  @Column({ comment: '相册的容量（可以保存的数量）', default: 100 })
   contain_nums: number;
 
-  @Column({ comment: '当前相册的数量' })
+  @Column({ comment: '当前相册的数量', default: 0 })
   photo_nums: number;
 
   @Column({ comment: '宿舍名称-导航名称，写宿舍号，如519' })
@@ -37,12 +37,12 @@ export class ClassPhotos {
   @Column()
   name: string;
 
+  @Column({ comment: '标签，默认是寝室号', default: '' })
+  tag: string;
+
   @ManyToOne(() => Dormitory, (dormitory) => dormitory.members)
   @JoinColumn({ name: 'dormitory_id' })
   dormitory: Dormitory;
-
-  @Column({ name: '寝室ID' })
-  dormitoryId: number;
 
   @Column()
   imageUrl: string;
