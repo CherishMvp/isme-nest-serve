@@ -5,6 +5,7 @@ on:
     branches:
       - main
   workflow_dispatch:
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -13,17 +14,27 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Build and package
+        run: |
+          # 执行打包操作，生成 dist 文件夹
+          # 这里假设使用 npm 或者 yarn 执行打包命令
+          npm install
+          npm run build
+
       - name: Copy files to server
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USER }}
           password: ${{ secrets.REMOTE_PASS }}
-          source: './'
+          source: './dist'
           target: ${{ secrets.REMOTE_TARGET }}
 
+      - name: Copy .env files to server
+        run: |
+          scp -r .env* ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:${{ secrets.REMOTE_TARGET }}
 
-      - name: SSH to server and restart application
+      - name: SSH to server and start application
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.REMOTE_HOST }}
@@ -31,7 +42,5 @@ jobs:
           password: ${{ secrets.REMOTE_PASS }}
           script: |
             cd ${{ secrets.REMOTE_TARGET }}
-            pnpm install
-            pnpm run build
-            pm2 stop class-nest
+            pm2 delete class-nest
             pm2 start ecosystem.config.js
