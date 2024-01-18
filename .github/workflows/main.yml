@@ -1,0 +1,37 @@
+name: Deploy to CentOS Server
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Copy files to server
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          password: ${{ secrets.REMOTE_PASS }}
+          source: './'
+          target: ${{ secrets.REMOTE_TARGET }}
+
+
+      - name: SSH to server and restart application
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          password: ${{ secrets.REMOTE_PASS }}
+          script: |
+            cd ${{ secrets.REMOTE_TARGET }}
+            pnpm install
+            pnpm run build
+            pm2 stop class-nest
+            pm2 start ecosystem.config.js
