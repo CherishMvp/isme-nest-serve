@@ -15,9 +15,11 @@ import { RoleModule } from './modules/role/role.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { ClassModule } from './modules/class/class.module';
 
-const envFilePath = ['.env.development', '.env.production', '.env']
+let envFilePath = ['.env.development', '.env.production', '.env'];
 const isDev = process.env.NODE_ENV === 'development';
-!isDev ? envFilePath.shift() : envFilePath
+
+if (!isDev) envFilePath.shift();
+
 console.log('isDev', isDev);
 console.log('envFilePath', envFilePath);
 @Module({
