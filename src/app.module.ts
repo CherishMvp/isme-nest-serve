@@ -15,12 +15,17 @@ import { RoleModule } from './modules/role/role.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { ClassModule } from './modules/class/class.module';
 
+const envFilePath = ['.env.development', '.env.production', '.env']
+const isDev = process.env.NODE_ENV === 'development';
+!isDev ? envFilePath.shift() : envFilePath
+console.log('isDev', isDev);
+console.log('envFilePath', envFilePath);
 @Module({
   imports: [
     /* 配置文件模块 */
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: ['.env.development', '.env'],
+      envFilePath: envFilePath,
     }),
 
     UserModule,
