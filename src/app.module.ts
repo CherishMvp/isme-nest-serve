@@ -14,6 +14,7 @@ import { PermissionModule } from './modules/permission/permission.module';
 import { RoleModule } from './modules/role/role.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { ClassModule } from './modules/class/class.module';
+import { OssModule } from './modules/oss/oss.module';
 
 let envFilePath = ['.env.development', '.env.production', '.env'];
 const isDev = process.env.NODE_ENV === 'development';
@@ -36,6 +37,7 @@ console.log('envFilePath', envFilePath);
     AuthModule,
     ClassModule,
     SharedModule,
+    OssModule,
   ],
 })
 export class AppModule {}
